@@ -35,29 +35,18 @@ class DataSet:
 
         test_idx = idx[0:test_size]
         train_idx = idx[test_size:SUM_SAMPLES]
-        print('Done shuffle!');
+        print('Done shuffle dataset!');
         return (train_idx, test_idx)
 
     def next_batch(self, batch_size):
         idx = self.train_idx[self.curr_training_step*batch_size:self.curr_training_step*batch_size + batch_size]
         data = []
-        debug_offset = None
-        debug_idx = None
+
         with open(DATASET_FILE, 'r') as ds:
             for i in range(len(idx)):
-                debug_idx = idx[i]
-                debug_offset = self.line_offset[idx[i]]
                 ds.seek(self.line_offset[idx[i]])
                 line = ds.readline().strip()
                 data.append(line.split(','))
-
-        if len(data) == 0:
-            print('self.curr_training_step', self.curr_training_step)
-            print('len(self.train_idx)', len(self.train_idx))
-            print('len(idx)', len(idx))
-            print('debug_idx', debug_idx)
-            print('debug_line_offset', debug_offset)
-            sys.exit()
 
         X_train_bs, Y_train_bs = self.split_image_label(data)
 

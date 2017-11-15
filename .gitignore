@@ -1,11 +1,9 @@
 sftp-config.json
-README.md
-LICENSE
 fonts/googles
 fonts/win
 fonts/vi
 test/
 data/train/characters/dataset.csv
-model.py
 predict.py
 requirement.txt
+GettingStart.ipynb

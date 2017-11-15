@@ -85,7 +85,7 @@ class DataGenerator:
                 image = np.asarray(ic)
                 image = self.rgb2gray(image)
                 image = image.reshape(1, IMG_WIDTH * IMG_HEIGHT)
-                with open(self.data_folder + self.data_set_csv,'ab') as df:
+                with open(DATASET_FILE,'ab') as df:
                     image = np.concatenate((image, np.array([[int(idx)]])), axis = 1)
                     np.savetxt(df, image, delimiter=",", fmt="%d")
 
