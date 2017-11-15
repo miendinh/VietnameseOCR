@@ -17,9 +17,9 @@ class DataGenerator:
         self.i = 0
         self.log = []
         self.errors = []
-        self.data_folder = DATA_DIR
+        self.data_folder = DATASET_DIR
         self.font_list = FONT_LIST
-        self.data_set_csv = DATA_FILE
+        self.data_set_csv = DATASET_FILE
         self.characters = []
         self.dataset_size = 0
 
@@ -76,10 +76,11 @@ class DataGenerator:
     def generate_dataset(self):
         characters = self.get_list_characters()
         for idx, ch in enumerate(characters):
-            if not os.path.exists(self.data_folder + str(idx)):
-                os.makedirs(self.data_folder + str(idx))
+            if SAVE_TEXT_IMAGE_TO_DISK and not os.path.exists(self.data_folder + str(idx)):
+              os.makedirs(self.data_folder + str(idx))
 
             c_images = self.generate_data_set(ch, idx)
+            print('.', end='')
             for ic in c_images:
                 image = np.asarray(ic)
                 image = self.rgb2gray(image)
@@ -89,6 +90,7 @@ class DataGenerator:
                     np.savetxt(df, image, delimiter=",", fmt="%d")
 
 if __name__ == "__main__":
+  print('Generating dataset...')
   generator = DataGenerator()
   generator.generate_dataset()
-  print('Text Image Dataset is generated!')
+  print('Text Image Dataset is generated:', DATASET_FILE_PATH)
