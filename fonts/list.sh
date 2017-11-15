@@ -1,0 +1,1 @@
+find "$PWD" -type f > ./fonts.list

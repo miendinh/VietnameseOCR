@@ -1,8 +1,9 @@
 sftp-config.json
 README.md
 LICENSE
-generate_dataset.py
-fonts/
+fonts/googles
+fonts/win
+fonts/vi
 test/
 data/train/characters/dataset.csv
 model.py
