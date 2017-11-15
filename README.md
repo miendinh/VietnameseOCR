@@ -28,10 +28,10 @@ PIL
 | FC1			| 				 |                |               |				|			 |
 | FC2			| [625, 190]	 |                |               |				|			 |
 
-<!---
+-
 ### Results
 #### Acurary
--->
+( Will update soon! )
 
 ### Training
 #### Prepare dataset for training
@@ -59,7 +59,7 @@ unzip win.zip
 ./list.sh
 ```
 
-##### Generate Text Images
+##### Generate Text Images Dataset
 ```
 python generate_data.py
 ```
