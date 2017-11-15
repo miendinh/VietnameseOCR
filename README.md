@@ -1,12 +1,12 @@
-# VietnameseOCR - Vietnamese Optical Character Recognition
+### VietnameseOCR - Vietnamese Optical Character Recognition
 
 Apply Deep Learning ( CNN networks ) to train a model uses for recognizing Vietnamese characters, it works well with Latin characters.
 
-# Dataset in big image ( 2800 x 2800 pixel)
+### Dataset in big image ( 2800 x 2800 pixel)
 
 ![](data/vocr_dataset.png)
 
-# Requirements
+### Requirements
 ```
 python 3.6.5
 tensorflow
@@ -14,7 +14,7 @@ PIL
 ```
 
 
-# Model Summary
+### Model Summary
 
 | Layer         | Shape 		 | 	Kernel   	  |    Stride 	  |   Padding 	|   	 	 |
 | -------------:| --------------:|---------------:|--------------:|------------:|-----------:|
@@ -28,29 +28,29 @@ PIL
 | FC1			| 				 |                |               |				|			 |
 | FC2			| [625, 190]	 |                |               |				|			 |
 
-# Result
-## Acurary
+### Result
+#### Acurary
 
-# Generate Text Images
+### Generate Text Images
 ```
 python generate_data.py
 ```
 
-# Training
+### Training
 ```
 python train.py
 ```
 
-# Further working
-
+### Further working
+- Character classification -> Done.
 - Dataset Augmentation.
 - Improve Accuracy.
 - Text location.
 - Text recognition.
 - Apply NLP for spell checking.
 
-# References
+### References
 1. STN-OCR https://arxiv.org/pdf/1707.08831.pdf
 3. https://arxiv.org/abs/1708.08201
 
-# Author mien.hust [at] gmail.com
+### Author mien.hust [at] gmail.com
