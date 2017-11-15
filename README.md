@@ -33,15 +33,37 @@ PIL
 #### Acurary
 -->
 
-### Generate Text Images
+### Training
+#### Prepare dataset for training
+```
+git clone https://github.com/miendinh/VietnameseOCR.git
+cd VietnameseOCR/data/train/characters
+unzip dataset.zip
+```
+
+#### Let's train.
+```
+python train.py
+```
+
+
+#### Create you own dataset
+##### Prepare fonts for generating text-image
+```
+cd VietnameseOCR/data/train/characters
+unzip google.zip
+unzip win.zip
+```
+##### Create font list which save in file fonts.list
+```
+./list.sh
+```
+
+##### Generate Text Images
 ```
 python generate_data.py
 ```
 
-### Training
-```
-python train.py
-```
 
 ### Further working
 - Character classification. -> Done.
