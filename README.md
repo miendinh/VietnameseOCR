@@ -2,7 +2,7 @@
 
 Apply Deep Learning ( CNN networks ) to train a model uses for recognizing Vietnamese characters, it works well with Latin characters.
 
-### Dataset in big image ( 2800 x 2800 pixel)
+### Dataset in big image ( 100.000 samples, 2800 x 2800 pixel)
 
 ![](data/vocr_dataset.png)
 
@@ -28,8 +28,10 @@ PIL
 | FC1			| 				 |                |               |				|			 |
 | FC2			| [625, 190]	 |                |               |				|			 |
 
-### Result
+<!---
+### Results
 #### Acurary
+-->
 
 ### Generate Text Images
 ```
@@ -42,9 +44,9 @@ python train.py
 ```
 
 ### Further working
-- Character classification -> Done.
-- Dataset Augmentation.
-- Improve Accuracy.
+- Character classification. -> Done.
+- Dataset augmentation.     
+- Improve accuracy.
 - Text location.
 - Text recognition.
 - Apply NLP for spell checking.
