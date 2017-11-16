@@ -4,6 +4,5 @@ fonts/win
 fonts/vi
 test/
 data/train/characters/dataset.csv
-predict.py
 requirement.txt
 GettingStart.ipynb

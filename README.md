@@ -19,16 +19,16 @@ PIL
 | Layer         | Shape 		 | 	Kernel   	  |    Stride 	  |   Padding 	|   	 	 |
 | -------------:| --------------:|---------------:|--------------:|------------:|-----------:|
 | INPUT     	| [28, 28, 1] 	 |			   	  | 			  |				|			 |
-| CONV1			| 				 | [3, 3, 32, 32] |  	          |    		    |   	 	 |
+| CONV1			| 				 | [3, 3, 32, 32] |  	[1, 1]    |    SAME     |   	 	 |
 | POOL1         |				 |				  |               |				|			 |
-| CONV2		    |				 | [3, 3, 32, 64] |               |				|			 |
+| CONV2		    |				 | [3, 3, 32, 64] |     [1, 1]    |	   SAME		|			 |
 | POOL2			|				 |                |               |				|			 |
-| CONV3			| 				 | [3, 3, 64, 128]|               |				|			 |
+| CONV3			| 				 | [3, 3, 64, 128]|     [1, 1]    |	   SAME		|			 |
 | POOL3			|				 |                |               |				|			 |
 | FC1			| 				 |                |               |				|			 |
 | FC2			| [625, 190]	 |                |               |				|			 |
 
--
+
 ### Results
 #### Acurary
 ( Will update soon! )
@@ -49,6 +49,7 @@ python train.py
 
 #### Create you own dataset
 ##### Prepare fonts for generating text-image
+- You can add more fonts
 ```
 cd VietnameseOCR/data/train/characters
 unzip google.zip
@@ -56,7 +57,7 @@ unzip win.zip
 ```
 ##### Create font list which save in file fonts.list
 ```
-./list.sh
+source ./list.sh
 ```
 
 ##### Generate Text Images Dataset
@@ -74,7 +75,9 @@ python generate_data.py
 - Apply NLP for spell checking.
 
 ### References
-1. STN-OCR https://arxiv.org/pdf/1707.08831.pdf
-3. https://arxiv.org/abs/1708.08201
+
+1. [STN-OCR: A single Neural Network for Text Detection and Text Recognition](https://arxiv.org/abs/1707.08831)
+2. [Automatic Dataset Augmentation](https://arxiv.org/abs/1708.08201)
+3. [VGG16 implementation in TensorFlow](http://www.cs.toronto.edu/~frossard/post/vgg16/)
 
 ### Author mien.hust [at] gmail.com

@@ -117,9 +117,18 @@ class VietOcr:
                 tf.summary.histogram('fc2.weights', fc2w)
                 tf.summary.histogram('fc2.biases', fc2b)
 
-    def load_weights(weights, sess):
-        None
-        #TODO
+    def load_weights(self, weight_file, sess):
+        weights = np.load(weight_file)
+        keys = sorted(weights.keys())
+        for i, k in enumerate(keys):
+            print i, k, np.shape(weights[k])
+            sess.run(self.parameters[i].assign(weights[k]))
+
+    def predict(self, character_image):
+        char, prob = sess.run([self.logits, self.prod], feed_dict={self.X: character_image})
+        
+        return (char, prod)
+
 
     def train(self, learning_rate, training_epochs, batch_size, keep_prob):
 
@@ -153,6 +162,7 @@ class VietOcr:
 
             print('Epoch:', '%02d' % (epoch + 1), 'cost =', '{:.9f}'.format(avg_cost))       
 
+        np.save("vocr.brain", self.parameters)
         print('Training finished!')
 
     def evaluate(self, batch_size, keep_prob):
