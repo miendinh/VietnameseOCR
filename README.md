@@ -32,6 +32,7 @@ PIL
 
 
 ### Results
+![](data/cost.png)
 ```
 Training...
 Epoch: 01 cost = 6.772273257
@@ -50,7 +51,7 @@ Epoch: 13 cost = 0.973539455
 Epoch: 14 cost = 0.879507029
 Epoch: 15 cost = 0.813665386
 
-Accuracy Evaluates
+Evaluation
 ------------------------------
 Test Accuracy: 0.927347593306
 ```

@@ -159,7 +159,7 @@ class VietOcr:
 
         saver = tf.train.Saver()
         save_path = saver.save(self.sess, "viet_ocr_brain.ckpt")
-        print("Trainned model saved in file: %s" % save_path)
+        print("Trainned model is saved in file: %s" % save_path)
 
     def evaluate(self, batch_size, keep_prob):
 
