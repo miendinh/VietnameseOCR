@@ -4,7 +4,7 @@ Apply Deep Learning ( CNN networks ) to train a model uses for recognizing Vietn
 
 ### Dataset in big image ( 100.000 samples, 2800 x 2800 pixel)
 
-![](data/vocr_dataset.png = 150x)
+![](data/vocr_dataset.png){ width=50% }
 
 ### Requirements
 ```
