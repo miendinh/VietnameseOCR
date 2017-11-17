@@ -12,6 +12,6 @@ FONT_LIST = 'fonts/fonts.list'
 
 CHARACTERS_SET = 'data/vi.characters.csv'
 
-#SUM_SAMPLES = 105640
-SUM_SAMPLES = 100
+SUM_SAMPLES = 105640
+#SUM_SAMPLES = 1000
 NO_LABEL = 190

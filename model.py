@@ -15,11 +15,7 @@ class VietOcr:
         self.conv2d()
         self.fc_layers()
 
-        self.probs = tf.nn.softmax(self.logits)
-
-        if self.log:
-            self.merged = tf.summary.merge_all()
-            self.train_writer = tf.summary.FileWriter('./log_train', self.sess.graph)
+        self.probs = tf.nn.softmax(self.logits, name='softmax')
 
         if weights is not None and sess is not None:
             self.load_weights(weights, sess)
@@ -118,34 +114,31 @@ class VietOcr:
                 tf.summary.histogram('fc2.biases', fc2b)
 
     def load_weights(self, weight_file, sess):
-        weights = np.load(weight_file)
-        keys = sorted(weights.keys())
-        for i, k in enumerate(keys):
-            print i, k, np.shape(weights[k])
-            sess.run(self.parameters[i].assign(weights[k]))
-
-    def predict(self, character_image):
-        char, prob = sess.run([self.logits, self.prod], feed_dict={self.X: character_image})
-        
-        return (char, prod)
-
+        None      
 
     def train(self, learning_rate, training_epochs, batch_size, keep_prob):
-
         self.dataset = DataSet()    
 
         self.Y = tf.placeholder(tf.float32, [None, NO_LABEL], name='Y')
         self.cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.logits, labels=self.Y))
         self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(self.cost)
 
+        if self.log:
+            tf.summary.scalar('cost', self.cost)
+            self.merged = tf.summary.merge_all()
+            self.train_writer = tf.summary.FileWriter('./log_train', self.sess.graph)
+
         self.sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.local_variables_initializer())
 
         print('Training...')
+        weights = []
+
         for epoch in range(training_epochs):
             avg_cost = 0
             total_batch = int(len(self.dataset.train_idx) / batch_size)
-
-            for i in range(total_batch):
+            #print('total_batch', total_batch)
+            for i in range(total_batch + 1):
                 batch_xs, batch_ys = self.dataset.next_batch(batch_size)
                 feed_dict = { 
                         self.X: batch_xs.reshape([batch_xs.shape[0], 28, 28, 1]), 
@@ -153,22 +146,22 @@ class VietOcr:
                         self.keep_prob: keep_prob
                     }
 
-                summary, c, _ = self.sess.run([self.merged, self.cost, self.optimizer], feed_dict=feed_dict)
+                weights, summary, c, _ = self.sess.run([self.parameters, self.merged, self.cost, self.optimizer], feed_dict=feed_dict)
                 avg_cost += c / total_batch
-                self.train_writer.add_summary(summary, epoch*i)
-            
+                
             if self.log:
-                tf.summary.scalar('avg_cost', avg_cost)
-
+                self.train_writer.add_summary(summary, epoch)
+                
             print('Epoch:', '%02d' % (epoch + 1), 'cost =', '{:.9f}'.format(avg_cost))       
 
-        np.save("vocr.brain", self.parameters)
         print('Training finished!')
 
+        saver = tf.train.Saver()
+        save_path = saver.save(self.sess, "viet_ocr_brain.ckpt")
+        print("Trainned model saved in file: %s" % save_path)
+
     def evaluate(self, batch_size, keep_prob):
-
-        self.Y = tf.placeholder(tf.float32, [None, NO_LABEL], name='Y')
-
+        
         self.correct_prediction = tf.equal(tf.argmax(self.logits, 1), tf.argmax(self.Y, 1))
         self.accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
         
@@ -186,7 +179,7 @@ class VietOcr:
                 self.keep_prob: keep_prob
             }        
 
-            correct = self.sess.run(self.accuracy, feed_dict=feed_dict)            
+            correct = self.sess.run(self.accuracy, feed_dict=feed_dict)
             correct_sample +=  correct * N_batch
 
         test_accuracy = correct_sample / N

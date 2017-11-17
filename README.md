@@ -65,6 +65,12 @@ source ./list.sh
 python generate_data.py
 ```
 
+### Play with pretrained model
+- All pretrained weights of model is save to file vocr.brain
+- Let's test with random character in dataset
+```
+python predict.py
+```
 
 ### Further working
 - Character classification. -> Done.
