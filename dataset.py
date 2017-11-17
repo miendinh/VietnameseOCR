@@ -6,8 +6,9 @@ import random
 import sys
 from config import *
 
+
 class DataSet:
-    def __init__(self, test_prob = 0.2, one_hot = True):
+    def __init__(self, test_prob=0.2, one_hot=True):
         self.test_prob = test_prob
         self.one_hot = one_hot
         self.X_test = []
@@ -15,13 +16,12 @@ class DataSet:
         self.curr_training_step = 0
         self.curr_test_step = 0
         self.line_offset = self.get_line_offset()
-        self.train_idx, self.test_idx = self.shuffle_data_set()  
-   
+        self.train_idx, self.test_idx = self.shuffle_data_set()
 
     def to_one_hot(self, X):
         one_hot = np.zeros((len(X), NO_LABEL))
         for i in range(len(X)):
-            np.put(one_hot[i, :], X[i], 1)        
+            np.put(one_hot[i, :], X[i], 1)
 
         return one_hot
 
@@ -39,7 +39,7 @@ class DataSet:
         return (train_idx, test_idx)
 
     def next_batch(self, batch_size):
-        idx = self.train_idx[self.curr_training_step*batch_size:self.curr_training_step*batch_size + batch_size]
+        idx = self.train_idx[self.curr_training_step * batch_size:self.curr_training_step * batch_size + batch_size]
         data = []
 
         with open(DATASET_FILE, 'r') as ds:
@@ -51,12 +51,13 @@ class DataSet:
         X_train_bs, Y_train_bs = self.split_image_label(data)
 
         self.curr_training_step = self.curr_training_step + 1
-        self.curr_training_step = self.curr_training_step if (self.curr_training_step*batch_size < len(self.train_idx)) else 0
+        self.curr_training_step = self.curr_training_step if (
+            self.curr_training_step * batch_size < len(self.train_idx)) else 0
 
         return (X_train_bs, Y_train_bs)
 
     def next_batch_test(self, batch_size):
-        idx = self.test_idx[self.curr_test_step*batch_size:self.curr_test_step*batch_size + batch_size]
+        idx = self.test_idx[self.curr_test_step * batch_size:self.curr_test_step * batch_size + batch_size]
         data = []
         debug_offset = None
         debug_idx = None
@@ -71,17 +72,17 @@ class DataSet:
         X_test_bs, Y_test_bs = self.split_image_label(data)
 
         self.curr_test_step = self.curr_test_step + 1
-        self.curr_test_step = self.curr_test_step if (self.curr_test_step*batch_size < len(self.test_idx)) else 0
+        self.curr_test_step = self.curr_test_step if (self.curr_test_step * batch_size < len(self.test_idx)) else 0
 
         return (X_test_bs, Y_test_bs)
 
     def split_image_label(self, data):
-        if(type(data) is list):
+        if (type(data) is list):
             data = np.asarray(data, dtype=np.float32)
 
         image = data[:, :-1]
         label = data[:, -1]
-        if self.one_hot: 
+        if self.one_hot:
             return (image, self.to_one_hot(label))
         else:
             return (image, label)
@@ -99,7 +100,6 @@ class DataSet:
                 line = ds.readline().replace('\n', '')
                 data.append(line.split(','))
 
-
         self.X_test, self.Y_test = self.split_image_label(data)
 
         return (self.X_test, self.Y_test)
@@ -115,5 +115,5 @@ class DataSet:
         return line_offset
 
 
-#if __name__ == "__main__":
-#   prepare = DataSet()
+        # if __name__ == "__main__":
+        #   prepare = DataSet()

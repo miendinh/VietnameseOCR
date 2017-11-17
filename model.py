@@ -4,14 +4,15 @@ import tensorflow as tf
 import numpy as np
 import sys
 
+
 class VietOcr:
     def __init__(self, weights=None, sess=None, log=True):
         self.sess = sess
         self.log = log
-        
+
         self.X = tf.placeholder(tf.float32, [None, 28, 28, 1], name='X')
         self.keep_prob = tf.placeholder(tf.float32, name='keep_prob')
-        
+
         self.conv2d()
         self.fc_layers()
 
@@ -29,13 +30,13 @@ class VietOcr:
             images = self.X - mean
 
         with tf.name_scope('conv1') as scope:
-            kernel = tf.Variable(tf.random_normal([3, 3, 1, 32], dtype=tf.float32, stddev=1e-1), 
-                                  name='weights')
+            kernel = tf.Variable(tf.random_normal([3, 3, 1, 32], dtype=tf.float32, stddev=1e-1),
+                                 name='weights')
             conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
-            biases = tf.Variable(tf.constant(0.0, shape=[32]), 
-                                  dtype=tf.float32, 
-                                  trainable=True, 
-                                  name='biases')
+            biases = tf.Variable(tf.constant(0.0, shape=[32]),
+                                 dtype=tf.float32,
+                                 trainable=True,
+                                 name='biases')
 
             out = tf.nn.bias_add(conv, biases)
             self.conv1_1 = tf.nn.relu(out, name=scope)
@@ -44,16 +45,15 @@ class VietOcr:
                 tf.summary.histogram('conv1.kernel', kernel)
                 tf.summary.histogram('conv1.biases', biases)
 
-
         self.pool1 = tf.nn.max_pool(self.conv1_1,
-                                 ksize=[1, 2, 2, 1],
-                                 strides=[1, 2, 2, 1],
-                                 padding='SAME',
-                                 name='pool1')
+                                    ksize=[1, 2, 2, 1],
+                                    strides=[1, 2, 2, 1],
+                                    padding='SAME',
+                                    name='pool1')
 
-        self.dropout1 = tf.nn.dropout(self.pool1, 
-                                    keep_prob=self.keep_prob, 
-                                    name='dropout1')
+        self.dropout1 = tf.nn.dropout(self.pool1,
+                                      keep_prob=self.keep_prob,
+                                      name='dropout1')
 
         with tf.name_scope('conv2') as scope:
             kernel = tf.Variable(tf.random_normal([3, 3, 32, 64], stddev=1e-1), dtype=tf.float32, name='weights')
@@ -85,11 +85,11 @@ class VietOcr:
         self.pool3 = tf.nn.max_pool(self.conv3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='pool3')
 
         self.dropout3 = tf.nn.dropout(self.pool3, keep_prob=self.keep_prob, name='dropout3')
-            
+
     def fc_layers(self):
         with tf.name_scope('fc1') as scope:
             shape = int(np.prod(self.dropout3.get_shape()[1:]))
-            fc1w = tf.get_variable("fc1w", shape=[128*4*4, 625], initializer=tf.contrib.layers.xavier_initializer())
+            fc1w = tf.get_variable("fc1w", shape=[128 * 4 * 4, 625], initializer=tf.contrib.layers.xavier_initializer())
             fc1b = tf.Variable(tf.random_normal([625]))
 
             dropout3_flat = tf.reshape(self.dropout3, [-1, shape])
@@ -107,17 +107,17 @@ class VietOcr:
             fc2b = tf.Variable(tf.random_normal([NO_LABEL]))
 
             self.logits = tf.nn.bias_add(tf.matmul(self.dropout_fc1, fc2w), fc2b, name="logits")
-            
+
             self.parameters += [fc2w, fc2b]
             if self.log:
                 tf.summary.histogram('fc2.weights', fc2w)
                 tf.summary.histogram('fc2.biases', fc2b)
 
     def load_weights(self, weight_file, sess):
-        None      
+        None
 
     def train(self, learning_rate, training_epochs, batch_size, keep_prob):
-        self.dataset = DataSet()    
+        self.dataset = DataSet()
 
         self.Y = tf.placeholder(tf.float32, [None, NO_LABEL], name='Y')
         self.cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.logits, labels=self.Y))
@@ -137,22 +137,23 @@ class VietOcr:
         for epoch in range(training_epochs):
             avg_cost = 0
             total_batch = int(len(self.dataset.train_idx) / batch_size)
-            #print('total_batch', total_batch)
+            # print('total_batch', total_batch)
             for i in range(total_batch + 1):
                 batch_xs, batch_ys = self.dataset.next_batch(batch_size)
-                feed_dict = { 
-                        self.X: batch_xs.reshape([batch_xs.shape[0], 28, 28, 1]), 
-                        self.Y: batch_ys, 
-                        self.keep_prob: keep_prob
-                    }
+                feed_dict = {
+                    self.X: batch_xs.reshape([batch_xs.shape[0], 28, 28, 1]),
+                    self.Y: batch_ys,
+                    self.keep_prob: keep_prob
+                }
 
-                weights, summary, c, _ = self.sess.run([self.parameters, self.merged, self.cost, self.optimizer], feed_dict=feed_dict)
+                weights, summary, c, _ = self.sess.run([self.parameters, self.merged, self.cost, self.optimizer],
+                                                       feed_dict=feed_dict)
                 avg_cost += c / total_batch
-                
+
             if self.log:
                 self.train_writer.add_summary(summary, epoch)
-                
-            print('Epoch:', '%02d' % (epoch + 1), 'cost =', '{:.9f}'.format(avg_cost))       
+
+            print('Epoch:', '%02d' % (epoch + 1), 'cost =', '{:.9f}'.format(avg_cost))
 
         print('Training finished!')
 
@@ -161,10 +162,10 @@ class VietOcr:
         print("Trainned model saved in file: %s" % save_path)
 
     def evaluate(self, batch_size, keep_prob):
-        
+
         self.correct_prediction = tf.equal(tf.argmax(self.logits, 1), tf.argmax(self.Y, 1))
         self.accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
-        
+
         N = len(self.dataset.test_idx)
         print('test.size', N);
         correct_sample = 0
@@ -177,13 +178,13 @@ class VietOcr:
                 self.X: batch_xs.reshape([N_batch, 28, 28, 1]),
                 self.Y: batch_ys,
                 self.keep_prob: keep_prob
-            }        
+            }
 
             correct = self.sess.run(self.accuracy, feed_dict=feed_dict)
-            correct_sample +=  correct * N_batch
+            correct_sample += correct * N_batch
 
         test_accuracy = correct_sample / N
 
         print("\nAccuracy Evaluates")
-        print("-"*30)
+        print("-" * 30)
         print('Test Accuracy:', test_accuracy)
