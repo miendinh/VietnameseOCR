@@ -7,7 +7,7 @@ Apply Deep Learning ( CNN networks ) to train a model uses for recognizing Vietn
 <!--
 ![](data/vocr_dataset.png)
 -->
-<img src="data/vocr_dataset.png" alt="Dataset" style="width: 10%;"/>
+<img src="data/vocr_dataset.png" alt="Dataset" style="width: 5%;"/>
 
 
 ### Requirements
