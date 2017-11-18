@@ -22,12 +22,12 @@ def predict(character_image):
 
     probs, chars = sess.run([logits, softmax], feed_dict={X: character_image.reshape((1, 28, 28, 1)), keep_prob: 1})
 
-    probs = (np.exp(probs) / np.sum(np.exp(probs))) * 100
+    probs = (np.exp(probs) / np.sum(np.exp(probs))) * 100    
     idx = np.argmax(chars)
-    return (probs[idx], idx)
+    return (probs[0, idx], idx)
 
 
-ds = DataSet(one_hot=False)
+ds = DataSet(test_prob=1, one_hot=False)
 characters = DataGenerator().get_list_characters()
 
 x, y = ds.next_batch_test(1)
@@ -35,9 +35,9 @@ x, y = ds.next_batch_test(1)
 print('x.shape', x.shape)
 print('y.shape', y.shape)
 
-char, prob = predict(x)
+prob, idx = predict(x)
 
 print('Input character: ', characters[int(y[0])])
-print('Predicted: ', characters[prob], ' with probability = ', prob)
-print('Result: ', characters[int(y[0])] == characters[prob])
+print('Predicted: ', characters[idx], ' with probability = ', prob, '%')
+print('Result: ', characters[int(y[0])] == characters[idx])
 print('-' * 10)
