@@ -35,25 +35,15 @@ PIL
 ![](data/cost.png)
 ```
 Training...
-Epoch: 01 cost = 6.772273257
-Epoch: 02 cost = 4.885908848
-Epoch: 03 cost = 4.292183308
-Epoch: 04 cost = 3.791747945
-Epoch: 05 cost = 3.244293085
-Epoch: 06 cost = 2.757302330
-Epoch: 07 cost = 2.223773586
-Epoch: 08 cost = 1.844299474
-Epoch: 09 cost = 1.571607014
-Epoch: 10 cost = 1.377784024
-Epoch: 11 cost = 1.216272550
-Epoch: 12 cost = 1.091827986
-Epoch: 13 cost = 0.973539455
-Epoch: 14 cost = 0.879507029
-Epoch: 15 cost = 0.813665386
+
+......
+Epoch: 38 cost = 0.312853018
+Epoch: 39 cost = 0.298816641
+Epoch: 40 cost = 0.293328794
 
 Evaluation
 ------------------------------
-Test Accuracy: 0.927347593306
+Test Accuracy: 0.974867469544
 ```
 
 

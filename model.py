@@ -151,7 +151,7 @@ class VietOcr:
                 avg_cost += c / total_batch
 
             if self.log:
-                self.train_writer.add_summary(summary, epoch)
+                self.train_writer.add_summary(summary, epoch + 1)
 
             print('Epoch:', '%02d' % (epoch + 1), 'cost =', '{:.9f}'.format(avg_cost))
 
