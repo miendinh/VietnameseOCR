@@ -63,18 +63,18 @@ python train.py
 
 #### Create you own dataset
 ##### Prepare fonts for generating text-image
-- You can add more fonts
+- You could add more fonts
 ```
 cd VietnameseOCR/data/train/characters
 unzip google.zip
 unzip win.zip
 ```
-##### Create font list which save in file fonts.list
+##### Create font list, then save it in fonts.list
 ```
 source ./list.sh
 ```
 
-##### Generate Text Images Dataset
+##### Generate Text Image Dataset
 ```
 python generate_data.py
 ```
