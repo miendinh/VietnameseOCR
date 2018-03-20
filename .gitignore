@@ -4,6 +4,7 @@ fonts/googles
 fonts/win
 fonts/vi
 test/
+papers/*
 data/train/characters/dataset.csv
 requirement.txt
 GettingStart.ipynb

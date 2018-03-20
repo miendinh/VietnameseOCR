@@ -20,15 +20,15 @@ PIL
 
 | Layer         | Shape 		 | 	Kernel   	  |    Stride 	  |   Padding 	|   	 	 |
 | -------------:| --------------:|---------------:|--------------:|------------:|-----------:|
-| INPUT     	| [28, 28, 1] 	 |			   	  | 			  |				|			 |
-| CONV1			| 				 | [3, 3, 32, 32] |  	[1, 1]    |    SAME     |   	 	 |
+| INPUT     	  | [28, 28, 1] 	 |			   	  | 			  |				|			 |
+| CONV1			    | 				 | [3, 3, 32, 32] |  	[1, 1]    |    SAME     |   	 	 |
 | POOL1         |				 |				  |               |				|			 |
-| CONV2		    |				 | [3, 3, 32, 64] |     [1, 1]    |	   SAME		|			 |
-| POOL2			|				 |                |               |				|			 |
-| CONV3			| 				 | [3, 3, 64, 128]|     [1, 1]    |	   SAME		|			 |
-| POOL3			|				 |                |               |				|			 |
-| FC1			| 				 |                |               |				|			 |
-| FC2			| [625, 190]	 |                |               |				|			 |
+| CONV2		      |				 | [3, 3, 32, 64] |     [1, 1]    |	   SAME		|			 |
+| POOL2			    |				 |                |               |				|			 |
+| CONV3			    | 				 | [3, 3, 64, 128]|     [1, 1]    |	   SAME		|			 |
+| POOL3			    |				 |                |               |				|			 |
+| FC1			      | 				 |                |               |				|			 |
+| FC2			      | [625, 190]	 |                |               |				|			 |
 
 
 ### Results
@@ -101,4 +101,4 @@ python predict.py
 2. [Automatic Dataset Augmentation](https://arxiv.org/abs/1708.08201)
 3. [VGG16 implementation in TensorFlow](http://www.cs.toronto.edu/~frossard/post/vgg16/)
 
-### Author mien.hust [at] gmail.com
+### Author mien.hust [at] gmail [dot] com
