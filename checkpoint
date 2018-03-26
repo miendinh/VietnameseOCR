@@ -1,0 +1,2 @@
+model_checkpoint_path: "viet_ocr_brain.ckpt"
+all_model_checkpoint_paths: "viet_ocr_brain.ckpt"

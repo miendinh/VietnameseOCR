@@ -8,3 +8,5 @@ papers/*
 data/train/characters/dataset.csv
 requirement.txt
 GettingStart.ipynb
+log_train
+__pycache__
