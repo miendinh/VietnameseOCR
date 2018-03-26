@@ -27,17 +27,18 @@ def predict(character_image):
     return (probs[0, idx], idx)
 
 
-ds = DataSet(test_prob=1, one_hot=False)
-characters = DataGenerator().get_list_characters()
+if __name__ == '__main__':
+    ds = DataSet(test_prob=1, one_hot=False)
+    characters = DataGenerator().get_list_characters()
 
-x, y = ds.next_batch_test(1)
+    x, y = ds.next_batch_test(1)
 
-print('x.shape', x.shape)
-print('y.shape', y.shape)
+    print('x.shape', x.shape)
+    print('y.shape', y.shape)
 
-prob, idx = predict(x)
+    prob, idx = predict(x)
 
-print('Input character: ', characters[int(y[0])])
-print('Predicted: ', characters[idx], ' with probability = ', prob, '%')
-print('Result: ', characters[int(y[0])] == characters[idx])
-print('-' * 10)
+    print('Input character: ', characters[int(y[0])])
+    print('Predicted: ', characters[idx], ' with probability = ', prob, '%')
+    print('Result: ', characters[int(y[0])] == characters[idx])
+    print('-' * 10)
