@@ -100,5 +100,6 @@ python predict.py
 1. [STN-OCR: A single Neural Network for Text Detection and Text Recognition](https://arxiv.org/abs/1707.08831)
 2. [Automatic Dataset Augmentation](https://arxiv.org/abs/1708.08201)
 3. [VGG16 implementation in TensorFlow](http://www.cs.toronto.edu/~frossard/post/vgg16/)
+4. [Vietnamese Dict (VietOCR3)](https://raw.githubusercontent.com/nguyenq/VietOCR3/master/dict/vi_VN.dic)
 
 ### Author mien.hust [at] gmail [dot] com
